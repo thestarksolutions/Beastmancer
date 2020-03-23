@@ -28,7 +28,7 @@ namespace Beastmancer
 
         private void OnTick(object sender, EventArgs evt)
         {
-
+            //test
         }
 
         private void OnKeyDown(object sender, KeyEventArgs e)
