@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Beastmancer", "Beastmancer\Beastmancer.csproj", "{4122E7F4-4858-4E2D-B41C-8CE832A0E92A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4122E7F4-4858-4E2D-B41C-8CE832A0E92A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4122E7F4-4858-4E2D-B41C-8CE832A0E92A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4122E7F4-4858-4E2D-B41C-8CE832A0E92A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4122E7F4-4858-4E2D-B41C-8CE832A0E92A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {65A34166-7CB8-40BF-BBEA-7B58732E4463}
+	EndGlobalSection
+EndGlobal
