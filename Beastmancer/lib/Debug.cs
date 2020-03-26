@@ -58,6 +58,16 @@ namespace Beastmancer
             te.Caption = text;
         }
 
+        public static void GetConfigFlags(Ped ped)
+        {
+            string text = "";
+            for(int i = 120; i < 160; i++)
+            {
+                text += $"config flag {i} is {ped.GetConfigFlag(i)} ";
+            }
+            Debug.DebugOne(text);
+        }
+
         private static void Clear()
         {
             debug_one_length += 1;

@@ -47,12 +47,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="allies\Ally.cs" />
+    <Compile Include="allies\AllyAnimal.cs" />
+    <Compile Include="allies\AllySpecial.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="lib\Names.cs" />
+    <Compile Include="lib\Raycast.cs" />
+    <Compile Include="lib\Settings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="lib\Debug.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Beastmancer.ini" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "E:\games\Rockstar Games\Red Dead Redemption 2\scripts"</PostBuildEvent>
+    <PostBuildEvent>xcopy /y /d "$(TargetPath)" "E:\games\Rockstar Games\Red Dead Redemption 2\scripts"
+xcopy /y $(ProjectDir)Beastmancer.ini "E:\games\Rockstar Games\Red Dead Redemption 2\scripts"</PostBuildEvent>
   </PropertyGroup>
 </Project>
