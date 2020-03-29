@@ -14,15 +14,15 @@ using System.Windows.Input;
 
 namespace Beastmancer
 {
-    class AllySpecial : Ally
+    class AllyFamiliar : Ally
     {
         private float speed_multiplier = 15f;
         private float stamina = 100f;
 
-        public AllySpecial(string model_name, string ally_name, int max_health = 200, bool can_fly = false)
+        public AllyFamiliar(string model_name, string ally_name, int max_health = 200, bool can_fly = false)
         {
             this.max_health = max_health;
-            this.ally_name = Names.GetRandomName();
+            this.ally_name = ally_name;
             this.ally_ped = Create(model_name);
             PostCreate();
             this.can_fly = can_fly;
@@ -39,24 +39,18 @@ namespace Beastmancer
             Model ped_model = new Model(model_name);
             Vector3 position = Game.Player.Character.GetOffsetInWorldCoords(new Vector3(0, 15, 0));
 
-            bool model_loaded = ped_model.Request(5);
+            bool model_loaded = ped_model.Request(5000);
 
             if (!model_loaded)
             {
                 return null;
             }
 
-            Client.LightningStrike(position);
             var ped = Function.Call<Ped>(Hash.CREATE_PED, ped_model.Hash, position.X, position.Y, position.Z, 0, false, false, true);
             
-            Debug.DebugThree($"Created! {model_name} ");
+            Debug.DebugAllyEvent($"Created! {model_name} ");
             
             return ped;
-        }
-
-        public override void AttackInArea()
-        {
-            throw new NotImplementedException();
         }
 
         public override void Update()

@@ -7,14 +7,15 @@ using RDR2;
 using RDR2.Native;
 using RDR2.UI;
 using RDR2.Math;
+using System.Drawing;
 
 namespace Beastmancer
 {
     class Debug : Script
     {
-        private static TextElement debug_one = new TextElement("", new System.Drawing.PointF(300f, 300f), 0.3f);
-        private static TextElement debug_two = new TextElement("", new System.Drawing.PointF(300f, 400f), 0.3f);
-        private static TextElement debug_three = new TextElement("", new System.Drawing.PointF(300f, 500f), 0.3f);
+        private static TextElement debug_one = new TextElement("", new System.Drawing.PointF(100f, 300f), 0.3f, Color.Yellow);
+        private static TextElement debug_two = new TextElement("", new System.Drawing.PointF(100f, 400f), 0.3f, Color.Blue);
+        private static TextElement debug_three = new TextElement("", new System.Drawing.PointF(100f, 500f), 0.3f, Color.Red);
         private static int debug_one_length = 0;
         private static int debug_two_length = 0;
         private static int debug_three_length = 0;
@@ -37,17 +38,17 @@ namespace Beastmancer
             RDR2.UI.Screen.ShowSubtitle(text);
         }
 
-        public static void DebugOne(string text)
+        public static void DebugPluginStat(string text)
         {
             debug_one_length = 0;
             SetDebugString(debug_one, text);
         }
-        public static void DebugTwo(string text)
+        public static void DebugAllyEvent(string text)
         {
             debug_two_length = 0;
             SetDebugString(debug_two, text);
         }
-        public static void DebugThree(string text)
+        public static void DebugAllyStat(string text)
         {
             debug_three_length = 0;
             SetDebugString(debug_three, text);
@@ -65,7 +66,7 @@ namespace Beastmancer
             {
                 text += $"config flag {i} is {ped.GetConfigFlag(i)} ";
             }
-            Debug.DebugOne(text);
+            Debug.DebugPluginStat(text);
         }
 
         private static void Clear()

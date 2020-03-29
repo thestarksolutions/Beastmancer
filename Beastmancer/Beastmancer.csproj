@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -47,9 +48,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="allies\Ally.cs" />
-    <Compile Include="allies\AllyAnimal.cs" />
-    <Compile Include="allies\AllySpecial.cs" />
+    <Compile Include="allies\AllyUndead.cs" />
+    <Compile Include="allies\AllyFamiliar.cs" />
     <Compile Include="Client.cs" />
+    <Compile Include="enemy\Enemy.cs" />
     <Compile Include="lib\Names.cs" />
     <Compile Include="lib\Raycast.cs" />
     <Compile Include="lib\Settings.cs" />

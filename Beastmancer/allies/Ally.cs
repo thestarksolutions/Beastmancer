@@ -16,15 +16,36 @@ namespace Beastmancer
         public string ally_name { get; set; }
         public int max_health = 100;
         public bool can_fly = false;
-
+        public bool is_undead = false;
         public abstract void PostCreate();
         public abstract Ped Create(string model_name);
-        public abstract void AttackInArea();
+
+        public void AttackInArea()
+        {
+            // NOTE: Different animal types will not attack the same enemy
+            Debug.Subtitle("Assist Me!");
+            Function.Call(Hash.CLEAR_PED_TASKS_IMMEDIATELY, this.ally_ped, false, false);
+            Function.Call(Hash.REGISTER_HATED_TARGETS_AROUND_PED, ally_ped, 150f);
+            Function.Call(Hash.TASK_COMBAT_HATED_TARGETS_NO_LOS_TEST, ally_ped, 150f);
+            //ally_ped.Task.FightAgainstHatedTargets(300f);
+        }
+
+        public virtual void Kill()
+        {
+            ally_ped.IsInvincible = false;
+            ally_ped.Health = 0;
+        }
+
+        public virtual void Destroy()
+        {
+            //ally_ped.MarkAsNoLongerNeeded();
+        }
 
         public void Follow()
         {
             Function.Call(Hash.CLEAR_PED_TASKS_IMMEDIATELY, this.ally_ped, false, false);
-            this.ally_ped.Task.FollowToEntity(Game.Player.Character, 15f, stoppingRange: 15f);
+            //ally_ped.Health = 100;
+            this.ally_ped.Task.FollowToEntity(Game.Player.Character, 50f, stoppingRange: 15f);
         }
 
         public virtual void Update()
@@ -41,7 +62,6 @@ namespace Beastmancer
 
         public virtual void Attack(Ped ped)
         {
-            ped.Task.ReactTo(ped, EventReaction.TaskCombatHigh);
             ally_ped.Task.Combat(ped);
         }
 
@@ -55,6 +75,7 @@ namespace Beastmancer
             Function.Call(Hash.SET_BLOCKING_OF_NON_TEMPORARY_EVENTS, ped, true); // this disables the popup info for an animal :(
             Function.Call(Hash.SET_PED_FLEE_ATTRIBUTES, ped, 0, 0);
             Function.Call(Hash.SET_PED_COMBAT_ATTRIBUTES, ped, 46, true);
+            Function.Call(Hash.SET_PED_COMBAT_ABILITY, ped, 100);
             ped.SetPedPromptName(ped_name);
         }
 
@@ -72,17 +93,18 @@ namespace Beastmancer
 
         private void FlyTo(Vector3 coords)
         {
-
+            // This doesn't work :/
             ally_ped.Task.LookAt(coords);
             float angle = Function.Call<float>(Hash.GET_HEADING_FROM_VECTOR_2D, coords.X - ally_ped.Position.X, coords.Y - ally_ped.Position.Y);
             Function.Call(Hash.SET_ENTITY_HEADING, ally_ped, angle);
             float actual = Function.Call<float>(Hash.GET_ENTITY_HEADING, ally_ped);
-            Debug.DebugTwo($"angle {angle} actual {actual}");
+
             Function.Call(Hash.TASK_FLY_TO_COORD, ally_ped.Handle, coords.X, 700f, coords.Z, 100f, 100f, actual, 100f);
         }
 
         private void RunTo(Vector3 coords)
         {
+            //ally_ped.Task.GoTo(coords, true);
             Function.Call(Hash.TASK_GO_TO_COORD_ANY_MEANS, ally_ped.Handle, coords.X, coords.Y, coords.Z, 100f, false, false, 0, 0.0f);
         }
 
@@ -93,7 +115,9 @@ namespace Beastmancer
 
         public void SetStamina(float stamina)
         {
-            Function.Call(Hash._RESTORE_PED_STAMINA, ally_ped, stamina);
+            ally_ped.StaminaCore = 100;
+            //Function.Call(Hash._RESTORE_PED_STAMINA, ally_ped, stamina);
         }
+
     }
 }
