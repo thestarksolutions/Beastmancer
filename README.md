@@ -1,2 +1,7 @@
-# Beastmancer
-Beastmancer mod for Red Dead Redemption 2
+# ARTHUR MORGAN: Beastmancer
+
+## About
+
+## Installation
+
+## Instructions
