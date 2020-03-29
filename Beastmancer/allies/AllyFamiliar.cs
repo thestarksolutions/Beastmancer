@@ -51,9 +51,7 @@ namespace Beastmancer
             }
 
             var ped = Function.Call<Ped>(Hash.CREATE_PED, ped_model.Hash, position.X, position.Y, position.Z, 0, false, false, true);
-            
-            Debug.DebugAllyEvent($"Created! {model_name} ");
-            
+                        
             return ped;
         }
 
