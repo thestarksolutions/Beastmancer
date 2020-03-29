@@ -24,20 +24,6 @@ namespace Beastmancer
             this.settings = ScriptSettings.Load(ini_path);
             this.allies = settings.GetValue("global", "allies").Split(',');
         }
-
-        public void LoadModels()
-        {
-            foreach (string ally_name in this.allies)
-            {
-                string model_name = settings.GetValue(ally_name, "model");
-                if (model_name != string.Empty)
-                {
-                    Model model = new Model(model_name);
-                    model.Request(5);
-                }
-            }
-        }
-
         
     }
 }

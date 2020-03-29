@@ -16,20 +16,24 @@ namespace Beastmancer
 {
     class AllyFamiliar : Ally
     {
-        private float speed_multiplier = 15f;
+        private float speed_multiplier;
         private float stamina = 100f;
 
-        public AllyFamiliar(string model_name, string ally_name, int max_health = 200, bool can_fly = false)
+        public AllyFamiliar(string model_name, string ally_name, int max_health = 200, bool can_fly = false, float speed_multiplier = 1f)
         {
             this.max_health = max_health;
             this.ally_name = ally_name;
+            this.speed_multiplier = speed_multiplier;
             this.ally_ped = Create(model_name);
+
             PostCreate();
             this.can_fly = can_fly;
         }
 
         public override void PostCreate()
         {
+            ally_ped.AddBlip(BlipType.CompanionGray);
+
             AddPedAttributes(ally_ped, ally_name);
         }
 

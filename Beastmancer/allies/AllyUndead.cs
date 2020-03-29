@@ -12,34 +12,47 @@ namespace Beastmancer
 {
     class AllyUndead : Ally
     {
-        private int life_span = 60000;
+        private int life_span;
         private int life_start;
         private int time_to_live = 0;
-        public AllyUndead(Ped ped, bool undead = false)
+        private Ped attack_target = null;
+        public AllyUndead(Ped ped, bool undead = false, int life_span = 60000)
         {
             this.ally_ped = ped;
             this.ally_name = Names.GetRandomName();
             this.is_undead = undead;
-            this.life_start = Client.GetCurrentTime();
+            this.life_start = Helpers.GetCurrentTime();
             this.ally_ped.IsInvincible = true;
+            this.life_span = life_span;
             if (undead)
             {
-                Client.SetWeatherTransition();
-                Client.LightningStrike(ped.Position);
+                Helpers.LightningStrike(ped.Position);
                 Function.Call(Hash.REVIVE_INJURED_PED, ped);
                 Debug.Subtitle($"Rise, {ally_name}!");
-                Client.ResumeWeather();
             }
             PostCreate();
         }
-        
+
+        public override void Attack(Ped ped)
+        {
+            attack_target = ped;
+            Function.Call(Hash.CLEAR_PED_TASKS_IMMEDIATELY, this.ally_ped, false, false);
+            this.ally_ped.Task.FollowToEntity(ped, follow_speed, stoppingRange: 1f);
+        }
+
+        public override void Follow()
+        {
+            this.attack_target = null;
+            base.Follow();
+        }
+
         public override void Update()
         {
             if (this.is_undead)
             {
-                World.AddExplosion(ally_ped.Position, 23, 0f, 0, false, false);
+                World.AddExplosion(ally_ped.Position, 23, 0f, 0, false, false); // helps visually identify what animals are undead
 
-                int current_time = Client.GetCurrentTime();
+                int current_time = Helpers.GetCurrentTime();
                 time_to_live = life_start + life_span - current_time;
 
                 if (BeingAimedAt())
@@ -52,6 +65,13 @@ namespace Beastmancer
                     Kill();
                 }
             }
+
+            if(attack_target != null && ally_ped.Position.DistanceTo(attack_target.Position) <= 3f && ally_ped.IsAlive)
+            {
+                // If near attack target, blow yourself up
+                Kill();
+            }
+
             base.Update();
         }
 
@@ -62,6 +82,8 @@ namespace Beastmancer
 
         public override void PostCreate()
         {
+            ally_ped.AddBlip(BlipType.WhiteDot);
+
             AddPedAttributes(ally_ped, ally_name);
             Follow();
         }

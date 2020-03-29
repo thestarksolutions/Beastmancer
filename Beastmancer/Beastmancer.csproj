@@ -52,6 +52,7 @@
     <Compile Include="allies\AllyFamiliar.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="enemy\Enemy.cs" />
+    <Compile Include="lib\Helpers.cs" />
     <Compile Include="lib\Names.cs" />
     <Compile Include="lib\Raycast.cs" />
     <Compile Include="lib\Settings.cs" />
@@ -60,6 +61,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Beastmancer.ini" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

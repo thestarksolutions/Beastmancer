@@ -20,14 +20,17 @@ namespace Beastmancer
         public abstract void PostCreate();
         public abstract Ped Create(string model_name);
 
+        public float hated_target_radius = 30f;
+        public float follow_speed = 100f;
+        public float follow_stopping_range = 15f;
+
         public void AttackInArea()
         {
             // NOTE: Different animal types will not attack the same enemy
-            Debug.Subtitle("Assist Me!");
+            Debug.Subtitle("Kill them all!");
             Function.Call(Hash.CLEAR_PED_TASKS_IMMEDIATELY, this.ally_ped, false, false);
-            Function.Call(Hash.REGISTER_HATED_TARGETS_AROUND_PED, ally_ped, 150f);
-            Function.Call(Hash.TASK_COMBAT_HATED_TARGETS_NO_LOS_TEST, ally_ped, 150f);
-            //ally_ped.Task.FightAgainstHatedTargets(300f);
+            Function.Call(Hash.REGISTER_HATED_TARGETS_AROUND_PED, ally_ped, hated_target_radius);
+            Function.Call(Hash.TASK_COMBAT_HATED_TARGETS_IN_AREA, ally_ped, Game.Player.Character.Position.X, Game.Player.Character.Position.Y, Game.Player.Character.Position.Z, hated_target_radius, 0, 0);
         }
 
         public virtual void Kill()
@@ -41,11 +44,10 @@ namespace Beastmancer
             //ally_ped.MarkAsNoLongerNeeded();
         }
 
-        public void Follow()
+        public virtual void Follow()
         {
             Function.Call(Hash.CLEAR_PED_TASKS_IMMEDIATELY, this.ally_ped, false, false);
-            //ally_ped.Health = 100;
-            this.ally_ped.Task.FollowToEntity(Game.Player.Character, 50f, stoppingRange: 15f);
+            this.ally_ped.Task.FollowToEntity(Game.Player.Character, follow_speed, stoppingRange: follow_stopping_range);
         }
 
         public virtual void Update()
@@ -105,7 +107,7 @@ namespace Beastmancer
         private void RunTo(Vector3 coords)
         {
             //ally_ped.Task.GoTo(coords, true);
-            Function.Call(Hash.TASK_GO_TO_COORD_ANY_MEANS, ally_ped.Handle, coords.X, coords.Y, coords.Z, 100f, false, false, 0, 0.0f);
+            Function.Call(Hash.TASK_GO_TO_COORD_ANY_MEANS, ally_ped.Handle, coords.X, coords.Y, coords.Z, follow_speed, false, false, 0, 0.0f);
         }
 
         public bool BeingAimedAt()
@@ -116,7 +118,6 @@ namespace Beastmancer
         public void SetStamina(float stamina)
         {
             ally_ped.StaminaCore = 100;
-            //Function.Call(Hash._RESTORE_PED_STAMINA, ally_ped, stamina);
         }
 
     }
