@@ -55,6 +55,12 @@ namespace Beastmancer
             return ped;
         }
 
+        public override void Kill()
+        {
+            Game.Player.Character.DeadEyeCore = Game.Player.Character.DeadEyeCore + 15;
+            base.Kill();
+        }
+
         public override void Update()
         {
 

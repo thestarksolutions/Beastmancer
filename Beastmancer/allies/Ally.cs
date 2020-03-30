@@ -60,6 +60,12 @@ namespace Beastmancer
             {
                 this.ally_ped.BlockPermanentEvents = true;
             }
+
+            if(ally_ped.IsAlive && ally_ped.Position.DistanceTo(Game.Player.Character.Position) > 600f)
+            {
+                Debug.Subtitle($"{ally_name} has been dismissed...");
+                Kill();
+            }
         }
 
         public virtual void Attack(Ped ped)
